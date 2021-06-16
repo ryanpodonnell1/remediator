@@ -31,6 +31,7 @@ func main() {
 			Usage: "parent level command to passively detect/report malformed configurations",
 			Action: func(c *cli.Context) error {
 				groups := DetectMalformedSecurityGroups(ec2Creds)
+				fmt.Println("[WARNING] GROUPS IN VIOLATION:")
 				SummarizeSGOutput(groups)
 				return nil
 			},
@@ -40,7 +41,9 @@ func main() {
 			Usage: "parent level command to ACTIVELY remediate malformed configurations",
 			Action: func(c *cli.Context) error {
 				groups := DetectMalformedSecurityGroups(ec2Creds)
+				fmt.Println("[WARNING] GROUPS IN VIOLATION:")
 				SummarizeSGOutput(groups)
+				fmt.Println("[WARNING] GROUPS BEING REMEDIATED")
 				RemediateMalformedSecurityGroups(ec2Creds, c, groups)
 				return nil
 			},

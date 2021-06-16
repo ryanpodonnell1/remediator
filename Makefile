@@ -1,7 +1,8 @@
-DEFAULT_AWS_PROFILE:="proton"
-VPC_ID:=vpc-0748e15cfac36c97f
+DEFAULT_AWS_PROFILE:="proton" #FOR TF APPLY AND REMEDIATOR AUTH
+VPC_ID:="vpc-0748e15cfac36c97f" #FOR TF APPLY
 
 .PHONY: build
+
 tf_init: 
 	export AWS_PROFILE=$(DEFAULT_AWS_PROFILE) && \
 	cd terraform/ && \
@@ -17,9 +18,10 @@ tf_destroy: tf_init
 	cd terraform/ && \
 	terraform destroy -var vpc_id=$(VPC_ID)
 
+#### REMEDIATOR
 clean:
-	rm bin/*
-	
+	rm bin/* || echo "no file"
+
 build: clean
 	cd remediator && GOMODULE111=on go build -o ../bin/remediator
 
