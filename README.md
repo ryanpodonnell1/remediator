@@ -4,15 +4,18 @@ As a Cloud Security Engineer I would like to ensure that I'm reducing the attack
 
 ## Proactively Preventing this type of issue
 
-In order to reduct attack surface it is recommended to disable ingress ports on known sensitive ports such as 22(SSH), 3389(RDP), 3306(MySQL)
+In order to reduce the attack surface it is recommended to disable ingress ports on known sensitive ports such as 22(SSH), 3389(RDP), 3306(MySQL)
 
 ### Prevent:
 
-One method to prevent this scenario is to institute a Pipeline mechanism that will check IaaC output as a preventative measure. Such tooling that can be employed is OPA(Open Policy Agent) [Terraform Plan Example](https://gist.github.com/ryanpodonnell1/3da9805733ce7dcce71ee5e0622fb1cc) and Checkov. These types of checks should be insituted in PR builds to give developer feedback as quick as possible and prevent git merges of known bad configuration
+One method to prevent this scenario is to institute a Pipeline mechanism that will check IaaC output as a preventative measure. Such tooling that can be employed is OPA([Open Policy Agent](https://www.openpolicyagent.org/docs/latest/terraform/)) 
+[Terraform Plan Example](https://gist.github.com/ryanpodonnell1/3da9805733ce7dcce71ee5e0622fb1cc)
 
-Checkov is also available in IDEs such as VSCODE that can catch this type of vulnerability before even being committed to source on the developers workstation. Other tooling that is not available in IDEs can be employed via pre-commit hooks to *validate* the code prior to commit, such as executing an OPA policy against a local tf plan in a test environment
+These types of checks should be insituted in PR builds to give developer feedback as quick as possible and prevent git merges of known bad configuration
 
-More advanced examples may be to provision approved security groups through firewall manager and prevent new security groups being provisioned anywhere else. This would provide central visibility and central source for networking traffic.
+[Checkov](https://github.com/bridgecrewio/checkov) is also available in IDEs such as VSCODE that can catch this type of vulnerability before even being committed to source on the developers workstation. Other tooling that is not available in IDEs can be employed via [pre-commit hooks](https://github.com/antonbabenko/pre-commit-terraform) to *validate* the code prior to commit, such as executing an OPA policy against a local tf plan in a test environment
+
+More advanced examples may be to provision approved security groups through [AWS Firewall Manager](https://docs.aws.amazon.com/waf/latest/developerguide/security-group-policies.html) and prevent new security groups being provisioned anywhere else. This would provide central visibility and central control source for AWS SG Policy orchestration.
 
 ### Detect:
 
