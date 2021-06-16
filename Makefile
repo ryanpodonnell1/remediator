@@ -1,5 +1,5 @@
 DEFAULT_AWS_PROFILE:="<UPDATE_ME>" #FOR TF_APPLY AND REMEDIATOR AUTH
-VPC_ID:="<UPDATE_ME>" #FOR TF_APPLY
+VPC_ID:="vpc-0748e15cfac36c97f" #FOR TF_APPLY
 
 .PHONY: build
 
@@ -23,7 +23,7 @@ clean:
 	rm bin/* || echo "no file"
 
 build: clean
-	cd remediator && GOMODULE111=on go build -o ../bin/remediator
+	cd remediator && GO111MODULE=on go build -o ../bin/remediator
 
 detect: build #PASSIVE DETECTON
 	export AWS_PROFILE=$(DEFAULT_AWS_PROFILE) && \
