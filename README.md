@@ -9,11 +9,12 @@ In order to reduce the attack surface it is recommended to disable ingress ports
 ### Prevent:
 
 One method to prevent this scenario is to institute a Pipeline mechanism that will check IaaC output as a preventative measure. Such tooling that can be employed is OPA([Open Policy Agent](https://www.openpolicyagent.org/docs/latest/terraform/)) 
-[Terraform Plan Example](https://gist.github.com/ryanpodonnell1/3da9805733ce7dcce71ee5e0622fb1cc)
 
-These types of checks should be insituted in PR builds to give developer feedback as quick as possible and prevent git merges of known bad configuration
+[OPA Policy Terraform Plan Example](https://gist.github.com/ryanpodonnell1/3da9805733ce7dcce71ee5e0622fb1cc)
 
-[Checkov](https://github.com/bridgecrewio/checkov) is also available in IDEs such as VSCODE that can catch this type of vulnerability before even being committed to source on the developers workstation. Other tooling that is not available in IDEs can be employed via [pre-commit hooks](https://github.com/antonbabenko/pre-commit-terraform) to *validate* the code prior to commit, such as executing an OPA policy against a local tf plan in a test environment
+These types of checks should be instituted in PR builds to give developer feedback as quick as possible and prevent merges of known bad configuration
+
+[Checkov](https://github.com/bridgecrewio/checkov) is also available in IDEs such as VSCODE that can catch this type of vulnerability before even being committed to source on a developers workstation. Other tooling that is not available in IDEs can be employed via [pre-commit hooks](https://github.com/antonbabenko/pre-commit-terraform) to *validate* the code prior to commit, such as executing an OPA policy against a local tf plan in a test environment
 
 More advanced examples may be to provision approved security groups through [AWS Firewall Manager](https://docs.aws.amazon.com/waf/latest/developerguide/security-group-policies.html) and prevent new security groups being provisioned anywhere else. This would provide central visibility and central control source for AWS SG Policy orchestration.
 
@@ -23,13 +24,13 @@ Not all configuration is done via IaaC (Terraform, Cloudformation, etc) and can 
 
 ### Report:
 
-Vulnerabilities such as these should be reported on a regular basis to establish whether the remediation/preventative controls are effective. Identifying longstanding compliance issues improves the security posture of the environment
+Vulnerabilities such as these should be reported/reviewed on a regular basis to establish whether the remediation/preventative controls are effective. Identifying longstanding compliance issues improves the security posture of the environment
 
-## Authenticating to AWS
+## Authenticating to AWS for CLI Tool usage
 
-It's recommended to use `export AWS_PROFILE=<profile_name>`, there are also variable placeholders in the Makefile if you wish to use the terraform/cli commands
+It's recommended to use `export AWS_PROFILE=<profile_name>`, there are also variable placeholders in the Makefile if you wish to use the make targets for terraform/cli commands
 
-## Spinning up the infrastructure with Provided Terraform  
+## Spinning up the vulnerable infrastructure with Terraform  
 
 A terraform configuration has been provided to make deployment/testing/teardown easier and is not required for the remediation code to work. Ensure that you are running **terraform v14** if you wish to use `make tf_apply`
 
@@ -49,11 +50,11 @@ If you don't wish to use the terraform provided, configure 1 or more AWS Securit
 
 The cli tool is called remediator and can be used several ways
 
-| Command                                | Description                                              |
-| -------------------------------------- | -------------------------------------------------------- |
-| `remediator detect`                    | prints out all securitygroups that have                  |
-| `remediator remediate`                 | performs a dry-run of removing resources                 |
-| `remediator remediate --dry-run=false` | performs an active run to remove violating ingress rules |
+| Command                                | Description                                                  |
+| -------------------------------------- | ------------------------------------------------------------ |
+| `remediator detect`                    | prints out all securitygroups that have compliance issues    |
+| `remediator remediate`                 | performs a dry-run of removing non-compliant ingress rules   |
+| `remediator remediate --dry-run=false` | performs an active run to remove non-compliant ingress rules |
 
 
 Makefile excerpt for usage examples:
