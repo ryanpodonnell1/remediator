@@ -4,7 +4,7 @@ As a Cloud Security Engineer I would like to ensure that I'm reducing the attack
 
 ## Proactively Preventing this type of issue
 
-In order to reduct attack surface it is reccomended to disable ingress ports on known sensitive ports such as 22(SSH), 3389(RDP), 3306(MySQL)
+In order to reduct attack surface it is recommended to disable ingress ports on known sensitive ports such as 22(SSH), 3389(RDP), 3306(MySQL)
 
 ### Prevent:
 
