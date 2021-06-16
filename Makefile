@@ -25,17 +25,17 @@ clean:
 build: clean
 	cd remediator && GOMODULE111=on go build -o ../bin/remediator
 
-detect: build
+detect: build #PASSIVE DETECTON
 	export AWS_PROFILE=$(DEFAULT_AWS_PROFILE) && \
 	cd bin && \
 	./remediator detect
 
-remediate_dry: build
+remediate_dry: build #DRY RUN ACTIVE REMEDIATON
 	export AWS_PROFILE=$(DEFAULT_AWS_PROFILE) && \
 	cd bin && \
 	./remediator remediate --dry-run=true
-
-remediate_active: build
+ 
+remediate_active: build #ACTIVE REMEDIATION
 	export AWS_PROFILE=$(DEFAULT_AWS_PROFILE) && \
 	cd bin && \
 	./remediator remediate --dry-run=false
