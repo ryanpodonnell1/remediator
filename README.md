@@ -20,7 +20,7 @@ Not all configuration is done via IaaC (Terraform, Cloudformation, etc) and can 
 
 ### Report:
 
-Vulnerabilities such as these should be reported on a regular basis to establish whether the remediation/preventative controls are effective.
+Vulnerabilities such as these should be reported on a regular basis to establish whether the remediation/preventative controls are effective. Identifying longstanding compliance issues improves the security posture of the environment
 
 ## Authenticating to AWS
 
@@ -33,7 +33,7 @@ A terraform configuration has been provided to make deployment/testing/teardown 
 
 ### Manual Steps
 
-If you don't wish to use the terraform provided, configure 1 or more AWS Security Group Ingress rules that match `0.0.0.0/0` and any port `[22,3389,3306]`. They may also fall within ranges such as `0-1024`
+If you don't wish to use the terraform provided, configure 1 or more AWS Security Group Ingress rules that match `0.0.0.0/0` and any port `[22,3389,3306]`. They may also fall within ranges such as `20-23`,`3305-3307`,`3388-3391`
 
 
 ## CLI Tool
@@ -78,3 +78,4 @@ remediate_active: build
 * add --auto-approve/manual approval mechanism (similar to terraform)
 * add ability to consume pre-planned files for approval workflow, this ensures that what is approved is what is actually removed 
 * add notification mechanism such as webhooks, email, etc
+* add unit tests to functions
