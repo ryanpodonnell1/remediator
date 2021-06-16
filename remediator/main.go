@@ -87,7 +87,8 @@ func detectMalformedSecurityGroupsIngressEvaluate(sgs []ec2.DescribeSecurityGrou
 				if *permission.IpProtocol == "-1" {
 					from = 0
 					to = 65535
-				} else {
+				}
+				if permission.FromPort != nil && permission.ToPort != nil {
 					from = *permission.FromPort
 					to = *permission.ToPort
 				}
